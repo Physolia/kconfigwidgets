@@ -38,10 +38,14 @@ static void activateScheme(const QString &colorSchemePath, bool overrideAutoSwit
     // ApplicationPaletteChange event.
     qApp->setProperty("KDE_COLOR_SCHEME_PATH", colorSchemePath);
     if (colorSchemePath.isEmpty()) {
-        qApp->setPalette(KColorScheme::createApplicationPalette(KSharedConfig::Ptr(nullptr)));
         // enable auto-switch when Default color scheme is set
         s_overrideAutoSwitch = false;
-        qApp->setPalette(KColorScheme::createApplicationPalette(KSharedConfig::openConfig(s_autoColorSchemePath)));
+
+        if (s_autoColorSchemePath.isEmpty()) {
+            qApp->setPalette(KColorScheme::createApplicationPalette(KSharedConfig::Ptr(nullptr)));
+        } else {
+            qApp->setPalette(KColorScheme::createApplicationPalette(KSharedConfig::openConfig(s_autoColorSchemePath)));
+        }
     } else {
         qApp->setPalette(KColorScheme::createApplicationPalette(KSharedConfig::openConfig(colorSchemePath)));
     }
