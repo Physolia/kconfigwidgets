@@ -42,7 +42,7 @@ static void activateScheme(const QString &colorSchemePath, bool overrideAutoSwit
         s_overrideAutoSwitch = false;
 
         if (s_autoColorSchemePath.isEmpty()) {
-            qApp->setPalette(KColorScheme::createApplicationPalette(KSharedConfig::Ptr(nullptr)));
+            qApp->setPalette(QPalette());
         } else {
             qApp->setPalette(KColorScheme::createApplicationPalette(KSharedConfig::openConfig(s_autoColorSchemePath)));
         }
